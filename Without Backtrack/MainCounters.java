@@ -45,7 +45,7 @@ class MainCounters {
         int intRandom = (int)(Math.random() * (maxStation - minStation + 1) + minStation);
         counter += 7;
 
-        setNumStation(3);
+        setNumStation(intRandom);
         counter++;
 
         int[][] stationCost = new int[NUM_LINE][NUM_STATION];
