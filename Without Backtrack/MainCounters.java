@@ -41,9 +41,8 @@ class MainCounters {
         int lowerBound = 1;
         int maxStation = 10;
         int minStation = 3;
-        counter += 4;
         int intRandom = (int)(Math.random() * (maxStation - minStation + 1) + minStation);
-        counter += 7;
+        counter += 11;
 
         setNumStation(intRandom);
         counter++;
