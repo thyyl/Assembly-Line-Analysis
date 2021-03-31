@@ -26,7 +26,7 @@ class Main {
         counter += 4;
 
         counter++;
-        for (int i = 1; i < n; i++, counter += 2) {
+        for (int i = 1; i < NUM_STATION; i++, counter += 2) {
             counter++;
 
             int up = min(first + stationCost[0][i], second + transferCost[1][i] + stationCost[0][i], 0, i),
