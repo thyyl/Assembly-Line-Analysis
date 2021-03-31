@@ -1,34 +1,40 @@
-class MainCounters {
+class Main {
     static int NUM_LINE = 2;
     static int NUM_STATION;
     static int counter = 0;
+    static int[][] bestPathway;
+    static int bestExit;
 
-    static int min(int a, int b) {
-        counter += 2;
-        return Math.min(a, b);
-    }
+    public static int AssemblyLine(int[][] stationCost, int[][] transferCost, int[] entryCost, int[] exitCost) {
+        int n = stationCost[0].length;
 
-    static int AssemblyLine(int[][] stationCost, int[][] transferCost, int[] entryCost, int[] exitCost) {
-        int[] T1 = new int [NUM_STATION];
-        int[] T2 = new int[NUM_STATION] ;
-
-        T1[0] = entryCost[0] + stationCost[0][0];
-        counter += 5;
-        T2[0] = entryCost[1] + stationCost[1][0];
-        counter += 5;
+        int first = entryCost[0] + stationCost[0][0];
+        counter += 4;
+        int second = entryCost[1] + stationCost[1][0];
+        counter += 4;
 
         counter++;
-        for (int i = 1; i < NUM_STATION; ++i, counter += 2) {
+        for (int i = 1; i < n; i++, counter += 2) {
             counter++;
-            T1[i] = min(T1[i - 1] + stationCost[0][i],T2[i - 1] + transferCost[1][i] + stationCost[0][i]);
-            counter += 13;
-            T2[i] = min(T2[i - 1] + stationCost[1][i],T1[i - 1] + transferCost[0][i] + stationCost[1][i]);
-            counter += 13;
+
+            int up = Math.min(first + stationCost[0][i], second + transferCost[1][i] + stationCost[0][i]),
+                    down = Math.min(second + stationCost[1][i], first + transferCost[0][i] + stationCost[1][i]);
+            counter += 16;
+
+            first = up;
+            counter++;
+            second = down;
+            counter++;
         }
         counter++;
 
-        counter += 10;
-        return min(T1[NUM_STATION - 1] + exitCost[0],T2[NUM_STATION - 1] + exitCost[1]);
+        first += exitCost[0];
+        counter += 2;
+        second += exitCost[1];
+        counter += 2;
+
+        counter += 2;
+        return Math.min(first, second);
     }
 
     static void setNumStation(int numStation) {
@@ -42,6 +48,7 @@ class MainCounters {
         int maxStation = 10;
         int minStation = 3;
         int intRandom = (int)(Math.random() * (maxStation - minStation + 1) + minStation);
+        bestPathway = new int[2][intRandom];
         counter += 11;
 
         setNumStation(intRandom);
@@ -77,8 +84,7 @@ class MainCounters {
         counter++;
 
         System.out.println(AssemblyLine(stationCost, transferCost, entryCost, exitCost));
-        counter += 2;
+        counter += 3;
         System.out.println("Counter: " + counter);
-        System.out.println("Station: " + NUM_STATION);
     }
 }
