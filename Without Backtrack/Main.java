@@ -1,24 +1,26 @@
 class Main {
     static int NUM_LINE = 2;
     static int NUM_STATION;
+    static int counter = 0;
 
-    static int min(int a, int b) {
-        return Math.min(a, b);
-    }
+    public static int AssemblyLine(int[][] stationCost, int[][] transferCost, int[] entryCost, int[] exitCost) {
+        int n = stationCost[0].length;
 
-    static int AssemblyLine(int[][] stationCost, int[][] transferCost, int[] entryCost, int[] exitCost) {
-        int[] T1 = new int [NUM_STATION];
-        int[] T2 =new int[NUM_STATION] ;
+        int first = entryCost[0] + stationCost[0][0];
+        int second = entryCost[1] + stationCost[1][0];
 
-        T1[0] = entryCost[0] + stationCost[0][0];
-        T2[0] = entryCost[1] + stationCost[1][0];
+        for (int i = 1; i < n; i++) {
+            int up = Math.min(first + stationCost[0][i], second + transferCost[1][i] + stationCost[0][i]),
+                    down = Math.min(second + stationCost[1][i], first + transferCost[0][i] + stationCost[1][i]);
 
-        for (int i = 1; i < NUM_STATION; ++i) {
-            T1[i] = min(T1[i - 1] + stationCost[0][i],T2[i - 1] + transferCost[1][i] + stationCost[0][i]);
-            T2[i] = min(T2[i - 1] + stationCost[1][i],T1[i - 1] + transferCost[0][i] + stationCost[1][i]);
+            first = up;
+            second = down;
         }
 
-        return min(T1[NUM_STATION - 1] + exitCost[0],T2[NUM_STATION - 1] + exitCost[1]);
+        first += exitCost[0];
+        second += exitCost[1];
+
+        return Math.min(first, second);
     }
 
     static void setNumStation(int numStation) {
@@ -44,7 +46,7 @@ class Main {
             exitCost[i] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
         }
 
-        for (int j = 0; j < intRandom; j++) {
+        for (int j = 0; j < NUM_STATION; j++) {
             stationCost[0][j] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
             stationCost[1][j] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
             transferCost[0][j] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
