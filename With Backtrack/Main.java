@@ -68,12 +68,12 @@ class Main {
         int[] entryCost = new int [NUM_LINE];
         int[] exitCost = new int[NUM_LINE];
 
-        for (int i = 0; i < NUM_LINE; i++, counter += 2) {
+        for (int i = 0; i < NUM_LINE; i++) {
             entryCost[i] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
             exitCost[i] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
         }
 
-        for (int j = 0; j < NUM_STATION; j++, counter += 2) {
+        for (int j = 0; j < NUM_STATION; j++) {
             stationCost[0][j] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
             stationCost[1][j] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
             transferCost[0][j] = (int)(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
