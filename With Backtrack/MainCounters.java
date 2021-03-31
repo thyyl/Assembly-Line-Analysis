@@ -6,17 +6,20 @@ class Main {
     static int bestExit;
 
     static int min(int a, int b, int assemblyLine, int station) {
+        counter++;
         if (assemblyLine == 0 ) {
+            counter += 3;
             bestPathway[assemblyLine][station] = (a < b) ? 0 : 1;
         } else if (assemblyLine == 1) {
+            counter += 4;
             bestPathway[assemblyLine][station] = (a < b) ? 1 : 0;
         }
+
+        counter++;
         return Math.min(a, b);
     }
 
     public static int AssemblyLine(int[][] stationCost, int[][] transferCost, int[] entryCost, int[] exitCost) {
-        int n = stationCost[0].length;
-
         int first = entryCost[0] + stationCost[0][0];
         counter += 4;
         int second = entryCost[1] + stationCost[1][0];
@@ -116,7 +119,7 @@ class Main {
 
         System.out.println(AssemblyLine(stationCost, transferCost, entryCost, exitCost));
         printPathway();
-        counter += 2;
+        counter += 3;
         System.out.println("Counter: " + counter);
         System.out.println("Station: " + NUM_STATION);
     }
